@@ -3,12 +3,14 @@ import hashlib
 from time import time
 
 
+# main class
 class BlockChain(object):
     def __init__(self):
         self.chain = []
         self.pending_transaction = []
         self.add_new_block(previous_hash="money send one person to another", proof=100)
 
+    # add this method used for add new blocks
     def add_new_block(self, proof, previous_hash=None):
         block = {
             'index': len(self.chain) + 1,
@@ -25,6 +27,7 @@ class BlockChain(object):
     def last_block(self):
         return self.chain[-1]
 
+    # this method used to make dictionary of transaction details
     def new_transaction(self, send, reciever, amount):
         transaction = {
             'send': send,
@@ -34,6 +37,7 @@ class BlockChain(object):
         self.pending_transaction.append(transaction)
         return self.last_block['index'] + 1
 
+    # this method is used for make hashing of each block
     def hash(self, block):
         to_json = json.dumps(block, sort_keys=True)
         to_encode = to_json.encode()
@@ -52,4 +56,3 @@ t5 = block_chain.new_transaction("chinju", "unnimol", '7 BTC')
 t6 = block_chain.new_transaction("jithu", "appu", '3 BTC')
 block_chain.add_new_block(20000)
 print(json.dumps(('block chain :', block_chain.chain), sort_keys=True, indent=2))
-
